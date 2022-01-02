@@ -1,3 +1,8 @@
+# Architectural design of URL shortening service using Azure Cloud Platform
+
+Please find the file ```URLShortner.png``` or ```URL_Shortening_Service.drawio``` for the proposed architecture of URL shortening service.
+
+
 # KubernetesProject
 
 ## Create a Dockerfile:  
