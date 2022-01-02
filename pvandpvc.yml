@@ -1,0 +1,29 @@
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: pvsample
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 1000M
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /usr/local/sample
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: sample
+  name: pvcsample
+spec:
+  storageClassName: manual
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100M
