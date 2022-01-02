@@ -84,5 +84,29 @@ Add ```/sample``` at the end of the above URL and browse the URL to see if the a
    ```
    http://<IPADDRESS>:<PORT>/sample
    ```
+## Add a self-signed certificate to Minikube  
+### Create a self signed certificate
 
-   
+Make sure that openssl is installed in your system. Run the below command to generate the certificate.   
+```
+openssl req -x509 -newkey rsa:4096 -sha256 -nodes -keyout tls_self.key -out tls_self.crt -subj "/CN=*.${DOMAIN}" -days 365
+```
+### Add the certificate as a secret to Kubectl
+```
+kubectl create secret tls mysamplesecret --cert=tls_self.crt --key=tls_self.key
+```
+### Create Ingress
+Use below command to get minikube IP Address:  
+```
+minikube ip
+```
+Use the above Ip address below.In, my case the IP address was 192.168.49.2   
+**Note:** We are using nip.io for the CDN so that we do not have to modify the hosts file
+
+Run the below command to create the ingress
+
+```
+kubectl create ingress sample --rule="sample.192.168.49.2.nip.io=sample:8080,tls=mysamplesecret"
+```
+
+Browse the URL ```https://sample.192.168.49.2.nip.io/sample``` and check if it is working.
